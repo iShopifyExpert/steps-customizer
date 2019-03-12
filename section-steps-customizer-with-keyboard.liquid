@@ -1,0 +1,177 @@
+{% assign product = all_products[section.settings.product] %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="codehouse-customizer">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <ul>
+              <li><a href="#tab1" data-toggle="tab">Type your Name</a></li>
+              <li><a href="#tab2" data-toggle="tab">Select Your Theme</a></li>
+              <li><a href="#tab3" data-toggle="tab">Select Photos & Frame</a></li>
+              <li><a href="#tab4" data-toggle="tab">Confirm</a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="bar" class="progress progress-striped active">
+          <div class="progress-bar"></div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane" id="tab1">
+            <input class="keyboardinput" placeholder="Tap on the virtual keyboard to start" />
+            <div class="simple-keyboard"></div>
+          </div>
+          <div class="tab-pane" id="tab2">
+	        2
+          </div>
+          <div class="tab-pane" id="tab3">
+			3
+          </div>
+          <div class="tab-pane" id="tab4">
+			4
+          </div>
+          <div class="navbuttons">
+            <div class="next"><input type="button" class="btn button-next" name="next" value="Next" /></div>
+            <div class="previous"><input type="button" class="btn button-previous" name="previous" value="Previous" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+   #codehouse-customizer {
+    max-width: 780px;
+    margin: 50px auto;
+   }
+   ul.nav.nav-pills {
+    text-align: center;
+    margin: 0;
+   }
+   ul.nav.nav-pills li {
+    display: inline-block;
+    float: none;
+    background: #f5f5f5;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+  }
+  .navbuttons{margin: 20px 0;}
+  .next{float:right;}
+  .previous{float:left;}
+  .keyboardinput {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 0 auto 15px;
+    text-align: center;
+}
+</style>
+{{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+{{ 'jquery.min.js' | asset_url | script_tag }}
+{{ 'bootstrap.min.js' | asset_url | script_tag }}
+{{ 'jquery.bootstrap.wizard.js' | asset_url | script_tag }}
+<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-keyboard-layouts@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.min.js"></script>
+<script>
+  
+  $(document).ready(function() {
+    $('#codehouse-customizer').bootstrapWizard({'nextSelector': '.button-next', 'previousSelector': '.button-previous', 'onTabShow': function(tab, navigation, index) {
+      var $total = navigation.find('li').length;var $current = index+1; var $percent = ($current/$total) * 100;var $current = index+1;
+      if($total == $current){$('.add_to_cart').slideDown(300);}else{$('.add_to_cart').slideUp('fast');}
+      $('#codehouse-customizer .progress-bar').css({width:$percent+'%'});
+      if ($(window).width() > 739){ }else{ $('html,body').animate({scrollTop: $("#codehouse-customizer").offset().top}, 'slow');}
+    }});
+    //Keyboard js
+    let Keyboard = window.SimpleKeyboard.default;
+    let KeyboardLayouts = window.SimpleKeyboardLayouts.default;
+    //Available Languages arabic, chinese, czech, english, french, german, hindi, italian, japanese, korean, russian, sindhi.js, spanish, thai, urdu
+    //const hebrew={default:["` 1 2 3 4 5 6 7 8 9 0 - = {bksp}","{tab} q w e r t y u i o p [ ] \\","{lock} a s d f g h j k l ; ' {enter}","{shift} z x c v b n m , . / {shift}",".com @ {space}"],shift:["~ ! @ # $ % ^ & * ( ) _ + {bksp}","{tab} Q W E R T Y U I O P { } |",'{lock} A S D F G H J K L : " {enter}',"{shift} Z X C V B N M < > ? {shift}",".com @ {space}"]};
+    let layout = new KeyboardLayouts().get('hebrew');
+    let myKeyboard = new Keyboard({
+      onChange: input => onChange(input),
+      onKeyPress: button => onKeyPress(button),
+      layout: layout
+    });
+    function onChange(input) {
+      document.querySelector(".keyboardinput").value = input;
+      console.log("Input changed", input);
+    }
+    function onKeyPress(button) {
+      console.log("Button pressed", button);
+    if (button === "{shift}" || button === "{lock}") handleShift();
+    }
+    function handleShift() {
+      let currentLayout = myKeyboard.options.layoutName;
+      let shiftToggle = currentLayout === "default" ? "shift" : "default";
+      myKeyboard.setOptions({
+        layoutName: shiftToggle
+      });
+    }
+  });
+</script>
+{% schema %}
+{
+  "name": "Section Customizer",
+  "class": "customizer-template",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select Product"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "suit",
+      "name": "Suit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "suit-option-title",
+          "label": "Options Title",
+          "default": "Lapel Type"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option-values",
+          "label": "Text",
+          "info": "Options Values (separate with qoma) Slim Fit, Tailored Fit, Classic (Standard) Fit"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option1-values",
+          "label": "Text",
+          "info": "Options Values (separate with pole & qoma) Slim Fit[sub heading]=Yes, No | Tailored Fit=Yes, No"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option11-values",
+          "label": "Text",
+          "info": "Options Values (separate with pole & qoma) Slim Fit[sub heading2]=Yes1, No1 | Tailored Fit=Yes1, No2"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option-help",
+          "label": "Text",
+          "info": "Options Help (separate with pole |) Options Help 1|Options Help 2"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option-input-values",
+          "label": "Text",
+          "info": "Options Input Values (separate with qoma) Vast in inch, Neck in inch, Coler in inch"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section Customizer",
+      "category": "Home"
+    }
+  ]
+}
+{% endschema %}
