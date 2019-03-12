@@ -1,0 +1,139 @@
+{% assign product = all_products[section.settings.product] %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="codehouse-customizer">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <ul>
+              <li><a href="#tab1" data-toggle="tab">Type your Name</a></li>
+              <li><a href="#tab2" data-toggle="tab">Select Your Theme</a></li>
+              <li><a href="#tab3" data-toggle="tab">Select Photos & Frame</a></li>
+              <li><a href="#tab4" data-toggle="tab">Confirm</a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="bar" class="progress progress-striped active">
+          <div class="progress-bar"></div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane" id="tab1">
+          1
+          </div>
+          <div class="tab-pane" id="tab2">
+	        2
+          </div>
+          <div class="tab-pane" id="tab3">
+			    3
+          </div>
+          <div class="tab-pane" id="tab4">
+			    4
+          </div>
+          <div class="navbuttons">
+            <div class="next"><input type="button" class="btn button-next" name="next" value="Next" /></div>
+            <div class="previous"><input type="button" class="btn button-previous" name="previous" value="Previous" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+   #codehouse-customizer {
+    max-width: 780px;
+    margin: 50px auto;
+   }
+   ul.nav.nav-pills {
+    text-align: center;
+    margin: 0;
+   }
+   ul.nav.nav-pills li {
+    display: inline-block;
+    float: none;
+    background: #f5f5f5;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+  }
+  .navbuttons{margin: 20px 0;}
+  .next{float:right;}
+  .previous{float:left;}
+</style>
+{{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+{{ 'jquery.min.js' | asset_url | script_tag }}
+{{ 'bootstrap.min.js' | asset_url | script_tag }}
+{{ 'jquery.bootstrap.wizard.js' | asset_url | script_tag }}
+<script>
+  
+  $(document).ready(function() {
+    $('#codehouse-customizer').bootstrapWizard({'nextSelector': '.button-next', 'previousSelector': '.button-previous', 'onTabShow': function(tab, navigation, index) {
+      var $total = navigation.find('li').length;var $current = index+1; var $percent = ($current/$total) * 100;var $current = index+1;
+      if($total == $current){$('.add_to_cart').slideDown(300);}else{$('.add_to_cart').slideUp('fast');}
+      $('#codehouse-customizer .progress-bar').css({width:$percent+'%'});
+      if ($(window).width() > 739){ }else{ $('html,body').animate({scrollTop: $("#codehouse-customizer").offset().top}, 'slow');}
+    }});
+  });
+</script>
+{% schema %}
+{
+  "name": "Section Customizer",
+  "class": "customizer-template",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select Product"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "suit",
+      "name": "Suit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "suit-option-title",
+          "label": "Options Title",
+          "default": "Lapel Type"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option-values",
+          "label": "Text",
+          "info": "Options Values (separate with qoma) Slim Fit, Tailored Fit, Classic (Standard) Fit"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option1-values",
+          "label": "Text",
+          "info": "Options Values (separate with pole & qoma) Slim Fit[sub heading]=Yes, No | Tailored Fit=Yes, No"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option11-values",
+          "label": "Text",
+          "info": "Options Values (separate with pole & qoma) Slim Fit[sub heading2]=Yes1, No1 | Tailored Fit=Yes1, No2"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option-help",
+          "label": "Text",
+          "info": "Options Help (separate with pole |) Options Help 1|Options Help 2"
+        },
+        {
+          "type": "textarea",
+          "id": "suit-option-input-values",
+          "label": "Text",
+          "info": "Options Input Values (separate with qoma) Vast in inch, Neck in inch, Coler in inch"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section Customizer",
+      "category": "Home"
+    }
+  ]
+}
+{% endschema %}
