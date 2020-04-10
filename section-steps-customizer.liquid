@@ -63,8 +63,7 @@
 {{ 'jquery.min.js' | asset_url | script_tag }}
 {{ 'bootstrap.min.js' | asset_url | script_tag }}
 {{ 'jquery.bootstrap.wizard.js' | asset_url | script_tag }}
-<script>
-  
+<script type="text/javascript">
   $(document).ready(function() {
     $('#codehouse-customizer').bootstrapWizard({'nextSelector': '.button-next', 'previousSelector': '.button-previous', 'onTabShow': function(tab, navigation, index) {
       var $total = navigation.find('li').length;var $current = index+1; var $percent = ($current/$total) * 100;var $current = index+1;
